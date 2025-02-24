@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe </title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .turn-indicator, .win-message {
+            border: 2px black solid;
+            padding: 10px;
+            width: 200px;
+            margin: 10px auto;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+            justify-content: center;
+            margin: 20px auto;
+        }
+
+        .square {
+            width: 100px;
+            height: 100px;
+            border: 2px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 60px;
+            font-weight: bold;
+            background-color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .square:hover {
+            background-color: lightgray;
+        }
+
+        .start-button {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-style: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Tic Tac Toe</h1>
+
+    <div class="turn-indicator">X's Turn</div>
+
+    <div class="board">
+        <script>
+            const NUM_SQUARES = 9;
+            for (let i = 0; i < NUM_SQUARES; i++) {
+                id = "sq" + i;
+                document.write("<div class='square' id='" + id + "'></div>");
+            }
+        </script>
+    </div>
+
+    <div class="win-message">Game in Progress</div>
+
+    <button class="start-button" onclick="startGame()">Start Game</button>
+
+    <script>
+        currentPlayer = Math.random() < 0.5 ? "X" : "O"; /* randomly select starting player */
+        document.querySelector(".turn-indicator").textContent = currentPlayer + "'s Turn";
+
+        function handleClick(event) {
+            square = event.target;
+
+            if (square.textContent !== "") return; /* prevent overwriting a filled square */
+
+            square.textContent = currentPlayer; /* place X or O */
+            alert("Square " + square.id.replace("sq", "") + " clicked!"); /* show popup with square number */
+
+            /* switch turns */
+            currentPlayer = currentPlayer === "X" ? "O" : "X";
+            document.querySelector(".turn-indicator").textContent = currentPlayer + "'s Turn";
+        }
+
+        function startGame() {
+            document.querySelectorAll(".square").forEach(square => {
+                square.textContent = ""; /* clear board */
+            });
+            currentPlayer = Math.random() < 0.5 ? "X" : "O"; /* randomize first player again */
+            document.querySelector(".turn-indicator").textContent = currentPlayer + "'s Turn";
+            document.querySelector(".win-message").textContent = "Game in Progress";
+        }
+
+        /* add event listeners to all squares */
+        document.querySelectorAll(".square").forEach(square => {
+            square.addEventListener("click", handleClick);
+        });
+    </script>
+
+</body>
+</html>
